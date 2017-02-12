@@ -67,7 +67,7 @@
     }
 
     .seq {
-      background-image: url('/assets/imgs/seq_sample.png');
+      background-image: url('./assets/imgs/seq_sample.png');
       width: 90px;
       height: 160px;
       display: inline-block;
@@ -88,7 +88,7 @@
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-    <script src="/dist/bideo.js"></script>
+    <script src="./dist/bideo.js"></script>
     <script>
       $(function () {
         var leftClip = Bideo({selector: '.seq.left'});
@@ -129,7 +129,7 @@
         }());
 
         $('body').on('mouseenter mouseleave', '.bideoBox', mouseEventHandler);
-        
+
       });
 
 
