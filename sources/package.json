@@ -1,0 +1,29 @@
+{
+  "name": "bideojs",
+  "version": "0.1.0",
+  "description": "bideo js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel index.js  --out-file ../dist/bideo.js",
+    "build-watch": "babel index.js  --out-file ../dist/bideo.js --watch"
+  },
+  "babel": {
+    "presets": ["env"],
+    "ignore": [
+      "node_modules"
+    ]
+  },
+  "keywords": [
+    "bideo",
+    "keyframes"
+  ],
+  "author": "dalgos",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-env": "^1.1.8",
+    "jquery": "^2.2.4"
+  }
+}

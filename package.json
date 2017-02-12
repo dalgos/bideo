@@ -1,0 +1,24 @@
+{
+  "name": "bideo.js",
+  "version": "0.1.0",
+  "description": "bideo library for web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dalgos/bideo.git"
+  },
+  "keywords": [
+    "bideo",
+    "video",
+    "mouse"
+  ],
+  "author": "dalgos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dalgos/bideo/issues"
+  },
+  "homepage": "https://github.com/dalgos/bideo#readme"
+}
