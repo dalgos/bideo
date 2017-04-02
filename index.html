@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>bideo test</title>
+    <title>frame animation</title>
     <!-- meta tag for ie9 -->
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <style id="normalize">
@@ -51,88 +51,57 @@
     }
     </style>
     <style>
-    .container {
-      width: 100%;
-      height: 100vh;
-      background-color: #ffee00;
-    }
-    .bideoBox {
-      width: auto;
-      height: 160px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin: -90px -80px;
-      background-color: #ffff44;
-    }
-
-    .seq {
-      background-image: url('./assets/imgs/seq_sample.png');
-      width: 90px;
-      height: 160px;
-      display: inline-block;
-    }
-    .seq.left {
-      background-position: 0 -160px;
-    }
-    .seq.right {
-      background-position: 0 -320px;
-    }
+      html, body { height: 100%; }
+      .scene { width: 280px; height: 498px; position:relative; left: 50%; margin-left: -140px; top: 200px; }
+      .frames { width: 100%; height: 100%; position: relative;}
+      .scene1 { background-image: url("./img/scene1.png"); background-repeat: no-repeat; }
+      .scene2 { background-image: url("./img/scene1.png"); background-repeat: no-repeat; }
+      .left, .right { display: none; }
     </style>
   </head>
   <body>
-    <div class="container">
-      <div class="bideoBox">
-        <div class="seq left"></div>
-        <div class="seq right"></div>
+    <div id="wrapper" class="scene">
+      <div id="sc1" class="frames scene1">
+        <h1>Intro</h1>
+      </div>
+      <div id="sc3" class="frames scene2 right">
+        <h1>Right</h1>
+      </div>
+      <div id="sc2" class="frames scene1 left">
+        <h1>Left</h1>
       </div>
     </div>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-    <script src="./dist/bideo.js"></script>
+    <script src="./dist/framm.js"></script>
     <script>
-      $(function () {
-        var leftClip = Bideo({selector: '.seq.left'});
-        var rightClip = Bideo({selector: '.seq.right'});
+    window.addEventListener('DOMContentLoaded', () => {
 
-        function trackingClientX(evt, callback) {
-          var delay = 300;
-          var beforeX = 0;
-          var direction = 'left';
-          if (evt.type === 'mouseenter') {
-            beforeX = evt.pageX;
-          } else {
-            if (beforeX < evt.pageX) {
-              direction = 'left';
-            } else {
-              direction = 'right';
-            }
-            callback && callback(direction);
-          }
-        }
+      const wrapper = document.getElementById('wrapper');
+      const elem = document.getElementById('sc1');
+      const leftElem = document.getElementById('sc2');
+      const rightElem = document.getElementById('sc3');
 
-        var mouseEventHandler = (function() {
-          var beforeX = 0;
-          return function (evt) {
-            if (evt.type === 'mouseenter') {
-              beforeX = evt.pageX;
-              console.log(beforeX);
-            } else {
-              console.log(beforeX, evt.pageX);
-              if (beforeX < evt.pageX) {
-                //right
-                rightClip.play();
-              } else {
-                leftClip.play();
-              }
-            }
-          }
-        }());
+      let intro = mabijs.framm.animate({ element: elem, sec: 36, complete: function () {
+        mabijs.tracker({ element: wrapper, left: left, right: right });
+      } }).play();
+      let leftScene = mabijs.framm.animate({ element: leftElem });
+      let rightScene = mabijs.framm.animate({ element: rightElem });
 
-        $('body').on('mouseenter mouseleave', '.bideoBox', mouseEventHandler);
+      function left() {
+        console.log('left');
+        intro.hide();
+        rightScene.hide();
+        leftScene.play();
+        // console.log(leftScene);
+      }
 
-      });
+      function right() {
+        console.log('right');
+        intro.hide();
+        leftScene.hide();
+        rightScene.play();
+      }
 
-
+    });
     </script>
   </body>
 </html>
