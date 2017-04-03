@@ -53,55 +53,70 @@
     <style>
       html, body { height: 100%; }
       .scene { width: 280px; height: 498px; position:relative; left: 50%; margin-left: -140px; top: 200px; }
-      .frames { width: 100%; height: 100%; position: relative;}
-      .scene1 { background-image: url("./img/scene1.png"); background-repeat: no-repeat; }
-      .scene2 { background-image: url("./img/scene1.png"); background-repeat: no-repeat; }
-      .left, .right { display: none; }
+      .frames { width: 280px; height: 498px; position: absolute; background-repeat: no-repeat; top: 0; left: 0; }
+      .left, .right { display: none; top: 0; }
+      .spinner { position: relative; left: 50%; width: 200px; height: 200px; margin-left: -100px; margin-top: -100px; }
     </style>
   </head>
   <body>
     <div id="wrapper" class="scene">
       <div id="sc1" class="frames scene1">
-        <h1>Intro</h1>
+        <!-- <h1>Intro</h1> -->
       </div>
       <div id="sc3" class="frames scene2 right">
-        <h1>Right</h1>
+        <!-- <h1>Right</h1> -->
       </div>
-      <div id="sc2" class="frames scene1 left">
-        <h1>Left</h1>
+      <div id="sc2" class="frames scene3 left">
+        <!-- <h1>Left</h1> -->
       </div>
     </div>
-    <script src="./dist/framm.js"></script>
-    <script>
-    window.addEventListener('DOMContentLoaded', () => {
+    <div id="spinner" class="spinner">
+      <center>
+        loading...
+      </center>
+    </div>
+    <script type="text/javascript" src="./dist/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="./dist/framm.js"></script>
+    <script type="text/javascript">
+    $(function () {
+      initialize();
+    });
+    function initialize () {
 
-      const wrapper = document.getElementById('wrapper');
-      const elem = document.getElementById('sc1');
-      const leftElem = document.getElementById('sc2');
-      const rightElem = document.getElementById('sc3');
+      var wrapper = document.getElementById('wrapper');
+      var elem = document.getElementById('sc1');
+      var leftElem = document.getElementById('sc2');
+      var rightElem = document.getElementById('sc3');
+      var spinner = document.getElementById('spinner');
 
-      let intro = mabijs.framm.animate({ element: elem, sec: 36, complete: function () {
+      var intro = mabijs.animate({ element: elem, sec: 30, complete: function () {
         mabijs.tracker({ element: wrapper, left: left, right: right });
-      } }).play();
-      let leftScene = mabijs.framm.animate({ element: leftElem });
-      let rightScene = mabijs.framm.animate({ element: rightElem });
+      } });
+      var rightScene = mabijs.animate({ element: rightElem, sec: 30, maxSequence: 67 });
+      var leftScene = mabijs.animate({ element: leftElem, sec: 30, maxSequence: 66 });
+
+      mabijs.load({ urls: ['./img/scene1.png', './img/scene2.png', './img/scene3.png'], callback: function () {
+        spinner.style.display = 'none';
+
+        elem.style.backgroundImage = 'url("./img/scene1.png")';
+        rightElem.style.backgroundImage = 'url("./img/scene2.png")';
+        leftElem.style.backgroundImage = 'url("./img/scene3.png")';
+
+        intro.play();
+      } });
 
       function left() {
-        console.log('left');
         intro.hide();
-        rightScene.hide();
+        // rightScene.hide();
         leftScene.play();
-        // console.log(leftScene);
       }
 
       function right() {
-        console.log('right');
         intro.hide();
-        leftScene.hide();
+        // leftScene.hide();
         rightScene.play();
       }
-
-    });
+    }
     </script>
   </body>
 </html>
