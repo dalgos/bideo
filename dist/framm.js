@@ -78,6 +78,7 @@
       }
 
       $(element).on('mouseenter mouseleave', eventHandler);
+
     },
     load: function (options) {
 
@@ -90,19 +91,13 @@
           var url = urls[i];
           $img = $('<img/>');
           $.get(url, function (idx) {
-            return function () {
-              completed.push(true);
-              checkComplete();
-            };
-          }(i));
+            completed.push(true);
+            urls.length === completed.length && callback();
+          });
           $img.attr('src', url);
         }
       }
 
-      function checkComplete() {
-        urls.length === completed.length && callback();
-      }
-      
     }
   };
 
